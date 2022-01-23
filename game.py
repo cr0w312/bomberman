@@ -13,6 +13,7 @@ class Game:
         dispatcher.add_listener("change_score", self.change_score)
         dispatcher.add_listener("change_location", self.change_location)
         dispatcher.add_listener("eat_food", self.eat_food)
+        dispatcher.add_listener('player_bounsing_off', self.bounse)
 
     def change_score(self, param=0):
         self.score += param
@@ -24,6 +25,14 @@ class Game:
     def change_location(self, param=0):
         self.grid = [[1 if random() < 0.2 else 0 for col in range(self.cols)] for row in range(self.rows)]
         self.food = (randrange(0, self.cols * self.tile), randrange(0, self.rows * self.tile), self.tile, self.tile)
+
+    def bounse(self, p):
+        if p.vel_x != 0:
+            p.vel_x = -p.vel_x // 2 - (p.vel_x // abs(p.vel_x))
+            
+        if p.vel_y != 0:
+            p.vel_y = -p.vel_y // 2 - (p.vel_y // abs(p.vel_y))
+            
 
     def eat_food(self, param=0):
         self.food = (-100, -100, 0, 0)
