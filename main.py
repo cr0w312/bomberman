@@ -57,6 +57,7 @@ while True:
     if game.check_collisions(p):
         dispatcher.emmit('player_change_color')
         dispatcher.emmit('change_score', -10)
+        dispatcher.emmit('player_bounsing_off', p)
 
     if game.check_food(p):
         dispatcher.emmit('change_score', 500)
@@ -95,7 +96,8 @@ while True:
         else:
             p.vel_y = 0
 
-
+    p.vel_x = min(20, p.vel_x)
+    p.vel_y = min(20, p.vel_y)
     p.move()
 
     pg.display.flip()
